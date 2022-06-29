@@ -1,0 +1,60 @@
+Firewall 
+
+Wireshark...
+upc connection 
+What is Hping3 ?
+Use for bypass firewall and DDOS Attack.
+
+Wireshark
+commands 
+	=>ping google.com
+	=>Get ip Address
+	=>filter the address
+
+Hping3 --help \*for helping*\
+
+
+clearclear alldateclockwhowhos
+
+
+wireshark 
+--------------------------------------------------------*ipaddress* && tcp.port=*portno.*
+--------------------------------------------------------
+use of hping
+hping3 -S -p 80 -c 1 172.217.163.46 -d 50
+
+-----------------------------------------------------------------------------
+Bypass Firewall
+1. Streadless Firewall 
+2. Stateless Friewall
+
+	=>WIRESHARK A
+	=>ping 127.0.0.0
+	=>stop
+
+	=>hping3 --help
+	=>hping3 127.0.0.1 -Q  -1 --spoof 192.168.1.1
+
+=>apt install ssh 
+=> service ssh start
+=> nmap -sS -sV 192.168.43.48
+=>ssh smart-robo@192.168.43.48
+say yes
+enter password
+apply stadeless firewall to save SSH firewall
+iptables :- Use for firewall 
+
+=>iptables -A INPUT -p tcp --dport 22 -j DROP 
+=>iptables -L
+
+=>icmp
+Runtime Save 
+ =>iptable -A INPUT -p ICMP -j DROP
+block ip address
+=>iptable --flush
+=>iptalble -A INPUT -p ICMP -d 192.168.43.48 -j DROP
+=>iptable -L
+
+=>hping3  --spoof 192.168.18.32 -1 192.168.18.32 -c 100
+apply security as flag based (blocked syns flag/ fin flag)
+=>iptables -A INPUT -p tcp --tcp-flags FIN,SYN SYN --dport 22 -J DROP 

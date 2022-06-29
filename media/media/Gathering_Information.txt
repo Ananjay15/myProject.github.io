@@ -1,0 +1,25 @@
+Gathering information From Server
+
+1. Passive Information 
+		There is no existing, gathering information about to network, server
+2. Active Information
+		handel the employee, operate network, system admin.
+
+How to gather information, server verneability
+
+	=>POC(proof of concept)
+	=>Exploit
+Sudan, Google Doc, Create POC, vernability report, VA(vernability assisement)
+
+1. Passive Information : 
+	->WHOIS.net/dnsdumpster.com
+	->In Kali : whois domain_name.com
+	->Bruteforce attack
+	->cve 
+	->CHECK SERVER IS VERNABLE OR NOT : server name exploit
+		->type in kali :- ssh
+		->Theharbuster package                       
+pip install requirnment.txt
+pip install -r base.txt
+          		->theharbuster --help
+		->

@@ -1,0 +1,132 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,300" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>
+        {% block title %}
+          Home
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 10px;margin-bottom: 80px;">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#" style="font-size:x-large; color:black;"><u>YUGANT INFOTECH</u></a>
+          </div>
+          <ul class="nav navbar-nav mr-auto">
+            <li  class="active"><a href="{% url 'composeEmail:home' %}" style="font-size: medium; color:black;">Inbox</a></li>
+            <li><a href="{% url 'composeEmail:mailSending' %}" style="font-size: medium; color:black;">Compose Email</a></li>
+            <li><a href="{% url 'composeEmail:send_box' %}" style="font-size: medium; color:black;">Send Box</a></li>
+            <li><a href="{% url 'logout_user' %}" style="font-size: medium; color:black;">Logout</a></li>
+            <li><a style="font-size: medium; color:black; text-decoration:underline;">Valid for - {{ validity }}</a></li>
+            
+            <li><a style="font-size: 20px; color:black;margin-left:250px;">{{ user.email }}</a></li>  
+
+          </ul>
+        </div>
+      </nav>
+
+
+<div class="container">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel rounded shadow panel-teal">
+            <div class="panel-heading">
+                <div class="pull-left">
+                    <h1 class="panel-title" style='color:black; font-weight:bold;  text-decoration:underline;'>Inbox</h1>
+                </div>
+                <div class="pull-right">
+                    <form method="POST" class="form-horizontal mr-5 mt-3">
+                        {% csrf_token %}
+                        <div class="form-group no-margin no-padding has-feedback">
+                            <input type="text" name="user" class="form-control no-border" style="background-color:white;" placeholder="Search mail">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-theme fa fa-search "></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="clearfix"></div>
+            </div><!-- /.panel-heading -->
+            <br>
+            <div class="panel-body no-padding">
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-email">
+                        <tbody>
+                        {% block content %}
+                        <h1>{{data}}</h1>
+                        {% for post in msg %}
+                            <tr class="unread selected">
+                                <td>
+                                    <div class="ckbox ckbox-theme">
+                                        <input id="checkbox1" type="checkbox" checked="checked" class="mail-checkbox">
+                                        <label for="checkbox1"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="#" class="star star-checked"><i class="fa fa-star"></i></a>
+                                </td>
+                                <td>
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h4 class="text-primary"><strong>From : </strong>
+                                                    {{ post.from_ }}
+
+                                            </h4>
+                                            <p class="email-summary"><strong>Subject : {{ post.subject }}</strong>
+
+                                                <p><strong>Content :</strong>
+                                                    {{ post.text | safe }}
+                                                    {{ post.html | safe }}
+                                                </p>
+                                            {% if post.attachments  %}
+                                                <h3 style="color:black; font-size:bolder; text-decoration:underline;"> ATTACHMENT </h3>
+                                            {% endif %}
+                                            <span class="media-meta"> {{ post.date_str }}</span>
+                                            {% for attach in post.attachments %}
+                                                    <a href="/static/userDoc/{{ attach.filename }}" download>
+                                                        {{ attach.filename }}
+                                                    </a>
+                                                    <br>
+                                                {% endfor%}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% endblock %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="container-fluid" style="background:brown; margin-top:10px">
+    <div  class='row text-center' style="margin-top:10px; font-weight:bold; color:white;">
+        Email : <a href="mailto:support@yuguntinfotech.com" style="font-weight:bold; color:white;">support@yuguntinfotech.com</a>
+    </div>
+    <div  class='row text-center'style="margin-bottom:10px; font-weight:bold; color:white;">
+        Phone : <a href="tel:+91-8906330555" style="font-weight:bold; color:white;">8906330555</a>
+    </div>
+</div>
+
+</body>
+</html>

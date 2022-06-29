@@ -1,0 +1,150 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,300" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>
+
+          Sent Box
+
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        function sure(){
+            alert('Are you Sure You Want to delete Items')
+        }
+    </script>
+  </head>
+  <body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 10px;margin-bottom: 80px;">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#" style="font-size:x-large; color:black;"><u>YUGANT INFOTECH</u></a>
+          </div>
+          <ul class="nav navbar-nav mr-auto">
+            <li><a href="{% url 'composeEmail:home' %}" style="font-size: medium; color:black;">Inbox</a></li>
+            <li><a href="{% url 'composeEmail:mailSending' %}" style="font-size: medium; color:black;">Compose Email</a></li>
+            <li  class="active"><a href="{% url 'composeEmail:send_box' %}" style="font-size: medium; color:black;">Send Box</a></li>
+
+            <li><a href="{% url 'logout_user' %}" style="font-size: medium; color:black;">Logout</a></li>
+            <li><a style="font-size: medium; color:black; text-decoration:underline;">Valid for - {{ validity }}</a></li>
+            <li><a style="font-size: 20px; color:black;margin-left:250px;">{{ user.email }}</a></li>  
+
+          </ul>
+        </div>
+      </nav>
+
+
+<div class="container">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel rounded shadow panel-teal">
+            <div class="panel-heading">
+                <div class="pull-left">
+                    <h1 class="panel-title " style="color:black; text-decoration:underline;">Sent Box</h1>
+                </div>
+                <div class="pull-right">
+                    <form method="POST" action="{% url 'composeEmail:send_box' %}" class="form-horizontal mr-5 mt-3">
+                        {% csrf_token %}
+                        <div class="form-group no-margin no-padding has-feedback">
+                            <input type="text" style="background-color:white;" name="search" class="form-control" placeholder="Search mail">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-theme fa fa-search "></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="clearfix"></div>
+            </div><!-- /.panel-heading -->
+            <br>
+            <div class="panel-body no-padding">
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-email">
+
+                        <tbody>
+                        <form method='POST' action="{% url 'composeEmail:delete_mail' %}">
+                        {% csrf_token %}
+                        <button type='submit' class="btn btn-primary" onClick='sure()'> <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+                        {% if msg %}
+                            {% for post in msg %}
+                            
+                                <tr class="unread selected">
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <a href="#" class="star star-checked"><i class="fa fa-star"></i></a>
+                                    </td>
+                                    <td>
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h4 class="text-primary"><strong>From : </strong>
+                                                        {{ post.to }}
+
+                                                </h4>
+                                                <p class="email-summary"><strong>Subject : {{ post.subject }}</strong>
+
+                                                    <p><strong>Content :</strong>
+                                                        {{ post.message }}
+                                                    </p>
+                                                    {% for object in post.attach.all %}
+                                                        <i class="fa fa-paperclip" aria-hidden="true"></i> : <a href="{{object.files.url}}" download>{{ object.files }}</a><br/>
+                                                    {% endfor %}
+                                                    <br />
+                                                <span class="media-meta"> </span>
+                                                <a href="{% url 'composeEmail:delete_sent_mail' post.pk %}" class='btn'><strong>Delete</strong></a> 
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="mail" id="" value="{{ post.id }}" >
+                                            <span class="custom-control-indicator" ></span>
+                                        </label>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                        <div>
+                            <h4 style="text-align:center; font-weight:bold; font-size:larger; ">No message Available</h4>
+                        </div>
+                        {% endif %}
+                        </form>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+<div class="container-fluid" style="background:brown; margin-top:130px">
+    <div  class='row text-center' style="margin-top:10px; font-weight:bold; color:white;">
+        Email : <a href="mailto:support@yuguntinfotech.com" style="font-weight:bold; color:white;">support@yuguntinfotech.com</a>
+    </div>
+    <div  class='row text-center'style="margin-bottom:10px; font-weight:bold; color:white;">
+        Phone : <a href="tel:+91-8906330555" style="font-weight:bold; color:white;">8906330555</a>
+    </div>
+</div>
+
+
+
+
+
+
+</body>
+</html> 

@@ -1,0 +1,119 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{% static 'compose.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,300" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Send mail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    {% block content %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 10px;">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#" style="font-size:x-large; color:black;"><u>YUGANT INFOTECH</u></a>
+          </div>
+          <ul class="nav navbar-nav mr-auto">
+            <li><a href="{% url 'composeEmail:home' %}" style="font-size: medium; color:black;">Inbox</a></li>
+            <li class="active"><a href="{% url 'composeEmail:mailSending' %}" style="font-size: medium; color:black;">Compose Email</a></li>
+            <li><a href="{% url 'composeEmail:send_box' %}" style="font-size: medium; color:black;">Send Box</a></li>
+            <li><a href="{% url 'logout_user' %}" style="font-size: medium; color:black;">Logout</a></li>
+            <li><a style="font-size: medium; color:black; text-decoration:underline;">Valid for - {{ validity }}</a></li>
+            
+            <li><a style="font-size: 20px; color:black;margin-left:250px;">{{ user.email }}</a></li>  
+
+          </ul>
+        </div>
+      </nav>
+
+
+
+  <script>
+
+    function send(){
+      alert('Mail send successfully')
+    }
+
+  </script>
+
+    <div class="container">
+        <div class="row">
+            <div class="col s8 offset-s2">
+                <div id="content" class="m2">
+
+                    <header id="header" class=" pink darken-1" style="font-size: large; font-weight:bolder;">
+                        Compose Email
+                    </header>
+
+                    <form id="send-mail" method="POST" action="{% url 'composeEmail:mailSending' %}" enctype="multipart/form-data" class="col s10 offset-s1">
+                      {% csrf_token %}
+                      <div class="row">
+                                <div class="input-field col s12">
+                                    <label for="email">To</label>
+                                    <input id="email" type="email" name="to">
+                                </div>
+                                <div class="input-field col s12">
+                                    <label for="subject">CC</label>
+                                    <input id="subject" type="email" name="cc">
+                                </div>
+                                <div class="input-field col s12">
+                                    <label for="subject">Subject</label>
+                                    <input id="subject" type="text" name="Subject">
+                                </div>
+
+                                <div class="input-field col s12">
+                                  <input id="subject" type="file" multiple name="files">
+                              </div>
+                        </div>
+
+                        <div class="row">
+                                <div class="input-field col s12">
+                                    <label for="message">Message </label>
+                                    <textarea id="message" name="body" class="materialize-textarea"></textarea>
+                                </div>
+                        </div>
+
+                        <div class="row" id="loaders">
+                                <img id="spinner" src="https://www.dropbox.com/s/wfsji06m6jfe0yl/spinner.gif?raw=1" width="150">
+                        </div>
+
+                        <div class="row">
+                                <div class="col s6">
+                                    <input type="submit" value='send' id="send" onClick='send()' class="btn waves-effect waves-light  pink darken-2" type="submit">
+
+                                </div>
+                        </div>
+                    </form>
+
+                </div> <!--.contenido-->
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+
+<div class="container-fluid" style="background:brown; margin-top:10px">
+    <div  class='row text-center' style="margin-top:10px; font-weight:bold; color:white;">
+        Email : <a href="mailto:support@yuguntinfotech.com" style="font-weight:bold; color:white;">support@yuguntinfotech.com</a>
+    </div>
+    <div  class='row text-center'style="margin-bottom:10px; font-weight:bold; color:white;">
+        Phone : <a href="tel:+91-8906330555" style="font-weight:bold; color:white;">8906330555</a>
+    </div>
+</div>
+
+
+    <!-- <script src="{% static '/js/compose.js' %}"></script> -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  </body>
+</html>

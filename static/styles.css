@@ -1,0 +1,56 @@
+/* body{
+    background-color: #0f121f;
+    color: rgb(170, 49, 49);
+} */
+
+body *{
+    font-family: Ubuntu;
+}
+
+h1, h2, h3, h4, h5{
+    font-weight: normal;
+    margin: 0;
+}
+
+a, a:hover, a:visited{
+    color: #fff;
+    text-decoration: none;
+}
+
+/* .container{
+    justify-items: center;
+    padding: 100px;
+} */
+
+.heading{
+    text-decoration: underline;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+      background-color: lightblue;
+      justify-items: center;
+      padding: 100px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .container {
+      background-color: yellow;
+      padding: 80px;
+      margin-top: 50px;
+    }
+    .form{
+        text-align: center;
+        /* margin-left: 280px; */
+        align-items: center;
+        padding-left: 380px;
+    }
+    .btn {
+        margin-right: 350px;
+    }
+    .heading{
+        text-decoration: underline;
+        text-align: center;
+    }
+}
